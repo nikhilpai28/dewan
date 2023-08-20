@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
-import Plugins from './components/Plugins';
+import Softwares from './components/Softwares';
 import image from './assets/dewan.jpeg'
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
 
@@ -10,7 +10,7 @@ function App() {
 
 
   const pluginHandler = () => {
-    setShowPlugins(true)
+    setShowPlugins(!showPlugins)
   }
 
   const cancelHandler = () => {
@@ -30,12 +30,17 @@ function App() {
         <img src={image} className='expanded-image' />
 
       </div>
-  
+
       <div>
-        <div className='container'>
-          <button onClick={pluginHandler} className='button'>Show Plugins</button>
+        <div className='container-title'>
+          <h1 className='title'>Software Management System!</h1>
         </div>
-        {showPlugins && <Plugins oncancel={cancelHandler} />}
+        <div className='container'>
+          <button onClick={pluginHandler} className={`my-button ${showPlugins ? 'clicked' : ''}`}>
+            {showPlugins ? 'Hide Softwares' : 'Show Softwares'}
+          </button>
+        </div>
+        {showPlugins && <Softwares oncancel={cancelHandler} />}
 
       </div>
 

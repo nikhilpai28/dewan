@@ -59,15 +59,17 @@
   
 }
 
-.button {
+/* .container button {
   font-size: 1rem;
   font-weight: bold;
   color: white;
-  background-color: #40005d;
+  background-color: rgb(57, 30, 210);
   border: 1px solid white;
   padding: 0.5rem;
   border-radius: 12px;
-}
+  cursor: pointer;
+  transition: background-color 3s, transform 3s;
+} */
 
 .button-screen-container {
   display: flex;
@@ -80,4 +82,50 @@
   /* opacity: 0.5;  */
 }
 
+@keyframes example {
+  0% { background-color: red; }
+  50% { background-color: black; }
+  100% { background-color: red; }
+}
+
+
+.title{
+  font-size: 2.5rem; /* Adjust the font size as needed */
+  font-weight: bold;
+  color: orange; /* Choose a suitable text color */
+  margin-bottom: 20px; /* Add spacing at the bottom */
+  text-align: center; /* Center-align the text */
+  text-transform: uppercase; /* Convert text to uppercase */
+  letter-spacing: 2px; /* Add a little letter spacing */
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; /* Choose a suitable font family */
+  animation: example 3s linear infinite;
+  
+}
+.container-title {
+  text-align: center;
+  background-color: rgb(0, 116, 224); /* Background color for the container */
+  padding: 20px; /* Padding around the container */
+  border-radius: 10px; /* Rounded corners for the container */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Drop shadow for a subtle effect */
+  transition: background-color 0.3s ease; /* Smooth transition for background color change */
+}
+
+
+
+
+
 /* Other styles for buttons, etc. */
+.my-button {
+  background-color: green;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 1s, transform 1s; /* Add a transition for background color and transform */
+}
+
+.my-button.clicked {
+  background-color: rgb(144, 3, 3);
+  transform: scale(0.95); /* Apply a scale transformation on click */
+}
