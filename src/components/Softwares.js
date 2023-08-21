@@ -3,42 +3,33 @@ import './Softwares.css';
 import './PluginItem.css'
 import './PluginsList.css'
 import { useState } from 'react';
+import constClass from '../Constants';
 
 const Softwares = (props) => {
 
-    const [message, setMessage] = useState('');
     const [currentVersion, setCurrentVersion] = useState('')
     const [newVersion, setNewVersion] = useState('')
-    const [required,setRequired] = useState(false)
 
-
-
-    const checkValues = currentVersion === newVersion
-    
-    const pluginButtonHandler = () => {
-        fetch('http://127.0.0.1:8000/')
-            .then(response => response.json())
-            .then(data => setMessage(data.message))
-            .catch(error => console.error(error));
-    }
 
     useEffect(() => {
-        fetch('http://localhost:8000/get_versions')
+        console.log("debug")
+        fetch(constClass.GET_VERSIONS)
             .then(response => response.json())
             .then(data => {
                 setCurrentVersion(data[0]);
                 setNewVersion(data[1])
             })
 
-        fetch('http://localhost:8000/store') 
+        fetch(constClass.STORE)
 
-        setRequired(currentVersion === newVersion)
     }, [])
 
     const installHandler = () => {
         console.log("debug")
-        fetch("http://localhost:8000/install")
+        fetch(constClass.INSTALL)
     }
+
+    
     return (
         <div className='main'>
             <table className='table'>
@@ -52,7 +43,9 @@ const Softwares = (props) => {
                     <td>Python</td>
                     <td>{currentVersion}</td>
                     <td>{newVersion}</td>
-                    {required && (<td><button onClick={installHandler}>Install</button></td>)}
+                    
+                    {currentVersion === newVersion ? (<p>Already updated to the latest version!</p>):
+                    (<td><button onClick={installHandler}>Install</button></td>)}
                 </tr>
             </table>
         </div>

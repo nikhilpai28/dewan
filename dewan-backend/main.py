@@ -2,17 +2,16 @@ from fastapi import FastAPI
 import platform
 import subprocess
 from fastapi.middleware.cors import CORSMiddleware
-import mysql.connector
-from minio import Minio
 import util
 import requests
+import constants
 
 from Connections import Connections
 
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000",  # Example frontend URL
+    "http://localhost:3000",  
 ]
 
 app.add_middleware(
@@ -45,13 +44,13 @@ def get_versions():
     
 @app.get("/store")    
 def store_in_s3():
-    url = "https://www.python.org/ftp/python/3.11.4/python-3.11.4-amd64.exe"
-    filename = "python-3.11.4-amd64.exe"
+    url = constants.SOFTWARE_URL
+    filename = constants.FILE_NAME
 
     response = requests.get(url, stream=True)
     exe_content = response.content
 
-    connection.save_into_minio(exe_content)
+    connection.save_into_minio(minio_client,exe_content)
     print(f"{filename} has been downloaded successfully.")
 
 @app.get("/install")    
@@ -61,7 +60,8 @@ def install():
 
     print("Sample data inserted")
 
-    local_file_path = "downloaded_python.exe"
+    local_file_path = constants.LOCAL_FILE_PATH
+
     with open(local_file_path, "wb") as local_file:
         local_file.write(exe_content)
 
@@ -69,12 +69,12 @@ def install():
 
     presigned_url = connection.get_presigned_url(minio_client)
 
-    data = ("Python",presigned_url)
+    insert_data = (constants.SOFTWARE_NAME,presigned_url)
 
     cursor = db_connection.cursor()
-    insert_query = "INSERT INTO Softwares(SNO,SOFTWARE,LOCATION) VALUES (1,%s,%s)"
+    insert_query = constants.INSERT_QUERY
     try:
-        cursor.execute(insert_query,data)
+        cursor.execute(insert_query,insert_data)
         db_connection.commit()
 
     except:
