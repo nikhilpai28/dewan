@@ -11,7 +11,7 @@ from Connections import Connections
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000",  
+    constants.FRONTEND_URL,  
 ]
 
 app.add_middleware(
